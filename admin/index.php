@@ -6,10 +6,10 @@ $connnection = new database();
 
 $name = array(
     "name"=>"Divakar Shukla",
-    "email"=>"divakarshuklapm@gmail.com",
-    "phone"=> "6394998090"
+    "email"=>"divakarpm@gmail.com",
+    "phone"=> "9554385933"
 );
-$connnection->update("customers", $name, "sss");
+$connnection->update("users", $name, "sssi", 1);
 echo "<br>";
 
 // if(isset($_POST["submit"])){

@@ -4,7 +4,7 @@ class database{
     private $db_host = "localhost";
     private $username = "root";
     private $password = "";
-    private $db_name = "user";
+    private $db_name = "pr";
 
     private $is_connect = false;
     private $result = array();
@@ -62,21 +62,39 @@ public function insert($table, $param = array(), $type_code){
 }
 
 public function update($table, $param = array(), $type_code, $where = null){
-if($this->table_exist($table,)){
+if($this->table_exist($table)){
 
-    $placeholder_arr = array();
+    // $placeholder_arr = array();
     $upadate_var = array();
+$placeholder_value = array_values($param);
+array_push($placeholder_value, $where);
+
     $column_name = implode(", ", array_keys($param));
 
     foreach($param as $key=>$value){
-        array_push($placeholder_arr, " ?");
-       $set = "$key = ' ? '";
-       array_push($upadate_var, $set);
+        // array_push($placeholder_arr, " ?");
+        $set = "$key =  ? ";
+        array_push($upadate_var, $set);
         
     }
-    $upadate_var = implode(", ", $upadate_var); 
-    echo $upadate_var;
-    $sqli = "UPDATE customers SET ";
+    $upadate_vars = implode(", ", $upadate_var); 
+    // echo $upadate_var;
+   $sqli = "UPDATE $table SET $upadate_vars where employee_id = ?"; 
+   $prepare =  $this->mysqli->prepare($sqli);
+   $prepare->bind_param($type_code, ...$placeholder_value); 
+
+   $f_result =  $prepare->execute();
+   if($f_result){
+    echo  $prepare->affected_rows;
+    array_push($this->result, $prepare->affected_rows);
+    return true;
+   }else{
+    echo $this->mysqli->error;
+    array_push($this->result, $this->mysqli->error);
+    return false;
+   }
+
+
 
 }
 
