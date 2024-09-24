@@ -25,7 +25,10 @@ echo "<br>";
 
 // $connnection->delete("customers", "3", "customer_id")
 
-$connnection->select("customers")
+// $connnection->select("customers")
+echo $connnection->pagiantion("customers", null, 1);
+
+
 
 ?>
 

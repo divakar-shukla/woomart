@@ -156,15 +156,64 @@ public function select($table, $column = " *", $join = null, $where = null, $ord
        }else{
         array_push($this->result, $this->mysqli->error);
         return false;
-       }
-
-        
+       }   
     }
-    
-
-
 } 
 
+
+public function get_result(){
+    $value = $this->result; 
+    $this->result = " ";
+    return $value;
+}
+
+public function pagiantion($table, $where = null, $limit=null){
+  
+    if($this->table_exist($table)){
+        $sql = "SELECT COUNT(*) AS numb FROM $table";
+        if($where != null){
+            $sql .= "WHERE = $where";
+        }
+
+        $query = $this->mysqli->query($sql);
+        
+        $total_row = $query->fetch_array()["numb"];
+
+        $number_ofpage = ceil($total_row / $limit);
+        $output = "<ul class='pagiantion'> ";
+
+        // $page_number = $_GET["page"];
+        if(isset($_GET["page"])){
+            $page_number = $_GET["page"];
+        }else{
+            $page_number = 1;
+        }
+        for($i= 1; $i <= $number_ofpage; $i++){
+         if($i == $page_number){
+            $output .= "<li class='active_page'>$i</li>";
+         }else{
+            $output .= "<li>$i</li>";
+
+         }
+
+
+        }
+
+        $output .= "</ul>";
+
+        return $output;
+    }
+}
+
+
+public function escapeString($data){
+$data = trim($data);
+$data = stripslashes($data);
+// $data = htmlentities($data);
+$data = htmlspecialchars($data);
+return  $this->mysqli->real_escape_string($data);
+
+}
 public function __destruct(){
     if($this->is_connect){
         if($this->mysqli->close()){
