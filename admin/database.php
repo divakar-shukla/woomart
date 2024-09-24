@@ -4,7 +4,7 @@ class database{
     private $db_host = "localhost";
     private $username = "root";
     private $password = "";
-    private $db_name = "pr";
+    private $db_name = "user";
 
     private $is_connect = false;
     private $result = array();
@@ -61,7 +61,7 @@ public function insert($table, $param = array(), $type_code){
  }
 }
 
-public function update($table, $param = array(), $type_code, $where = null){
+public function update($table, $param = array(), $type_code, $where = null, $whereColumn){
 if($this->table_exist($table)){
 
     // $placeholder_arr = array();
@@ -79,7 +79,8 @@ array_push($placeholder_value, $where);
     }
     $upadate_vars = implode(", ", $upadate_var); 
     // echo $upadate_var;
-   $sqli = "UPDATE $table SET $upadate_vars where employee_id = ?"; 
+   $sqli = "UPDATE $table SET $upadate_vars WHERE $whereColumn = ?"; 
+   echo $sqli;
    $prepare =  $this->mysqli->prepare($sqli);
    $prepare->bind_param($type_code, ...$placeholder_value); 
 
@@ -95,13 +96,89 @@ array_push($placeholder_value, $where);
    }
 
 
-
 }
 
 }
 
+public function delete($table, $where, $whereColumn ){
+
+if($this->table_exist($table)){
+    $sqli = "DELETE FROM $table WHERE $whereColumn = ?";
+   echo $sqli;
+   $prepare = $this->mysqli->prepare($sqli);
+   $prepare->bind_param("s", $where);
+   $f_result = $prepare->execute();
+   if($f_result){
+    echo $prepare->affected_rows;
+    array_push($this->result, $prepare->affected_rows);
+    return true;
+   }else{
+    echo $this->mysqli->error;
+    array_push($this->result, $this->mysqli->error);
+    return false;
+   }
 }
 
+}
+
+public function select($table, $column = " *", $join = null, $where = null, $order = null, $limit = null){
+    if($this->table_exist($table)){
+        $sql = "SELECT $column FROM $table";
+
+        if($join != null){
+            $sql .= " JOIN $join";
+        }
+        if($where != null){
+            $sql .= " WHERE $where";
+        }
+        if($order != null){
+            $sql .= " ORDER BY $order";
+        }
+        if($limit != null){
+            if(!$_GET["page"]){
+                $page = 1;
+            }else{
+                $page = $_GET["page"];
+            }
+
+            $start = ($page - 1) * $limit;
+
+            $sql .= " LIMIT $start, $limit";
+        }
+       $query = $this->mysqli->query($sql);
+
+       if($query){
+        $this->result = $query->fetch_all(MYSQLI_ASSOC);
+        echo "<pre>";
+        print_r( $this->result);
+        echo "<pre>";
+        return true;
+       }else{
+        array_push($this->result, $this->mysqli->error);
+        return false;
+       }
+
+        
+    }
+    
+
+
+} 
+
+public function __destruct(){
+    if($this->is_connect){
+        if($this->mysqli->close()){
+            $this->conn = false;
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+
+}
+
+	
 
 
 ?>
