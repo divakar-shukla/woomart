@@ -21,10 +21,12 @@ class database{
                 }
             }else{
             //  echo "connected";
-             return true;
+             return true;  
             }
         } 
     }
+
+
     private function table_exist($table){
         $sqli = "SHOW TABLES FROM $this->db_name LIKE '$table'";
         $f_result =  $this->mysqli->query($sqli);
@@ -80,8 +82,9 @@ array_push($placeholder_value, $where);
     $upadate_vars = implode(", ", $upadate_var); 
     // echo $upadate_var;
    $sqli = "UPDATE $table SET $upadate_vars WHERE $whereColumn = ?"; 
-   echo $sqli;
+//    echo $sqli;
    $prepare =  $this->mysqli->prepare($sqli);
+//    print_r($placeholder_value);
    $prepare->bind_param($type_code, ...$placeholder_value); 
 
    $f_result =  $prepare->execute();
@@ -120,6 +123,7 @@ if($this->table_exist($table)){
 }
 
 }
+
 
 public function select($table, $column = " *", $join = null, $where = null, $order = null, $limit = null){
     if($this->table_exist($table)){
@@ -181,7 +185,7 @@ public function pagiantion($table, $where = null, $limit=null){
 
         $number_ofpage = ceil($total_row / $limit);
         $output = "<ul class='pagiantion'> ";
-
+       
         // $page_number = $_GET["page"];
         if(isset($_GET["page"])){
             $page_number = $_GET["page"];
@@ -228,6 +232,11 @@ public function __destruct(){
 }
 
 	
+$url = basename($_SERVER['PHP_SELF']);
 
+echo $url;
+echo "<br>";
+
+echo $_SERVER["PHP_SELF"];
 
 ?>
