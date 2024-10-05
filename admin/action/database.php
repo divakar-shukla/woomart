@@ -4,10 +4,11 @@ class database{
     private $db_host = "localhost";
     private $username = "root";
     private $password = "";
-    private $db_name = "user";
+    private $db_name = "shopping_db";
 
     private $is_connect = false;
     private $result = array();
+    private $error = array();
     private $mysqli = "";
 
 
@@ -56,7 +57,7 @@ public function insert($table, $param = array(), $type_code){
     echo $this->mysqli->insert_id;
     return true; 
    }else{
-    array_push($this->result, $this->mysqli->error);
+    array_push($this->error, $this->mysqli->error);
     return false;
    }
 
@@ -94,7 +95,7 @@ array_push($placeholder_value, $where);
     return true;
    }else{
     echo $this->mysqli->error;
-    array_push($this->result, $this->mysqli->error);
+    array_push($this->error, $this->mysqli->error);
     return false;
    }
 
@@ -117,7 +118,7 @@ if($this->table_exist($table)){
     return true;
    }else{
     echo $this->mysqli->error;
-    array_push($this->result, $this->mysqli->error);
+    array_push($this->error, $this->mysqli->error);
     return false;
    }
 }
@@ -158,18 +159,23 @@ public function select($table, $column = " *", $join = null, $where = null, $ord
         echo "<pre>";
         return true;
        }else{
-        array_push($this->result, $this->mysqli->error);
+        array_push($this->error, $this->mysqli->error);
         return false;
        }   
     }
 } 
 
-
 public function get_result(){
     $value = $this->result; 
-    $this->result = " ";
+    $this->result = array();
     return $value;
 }
+public function get_error(){
+    $value = $this->error; 
+    $this->error = array();
+    return $value;
+}
+
 
 public function pagiantion($table, $where = null, $limit=null){
   

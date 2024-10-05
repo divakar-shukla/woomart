@@ -18,21 +18,25 @@
 </head>
 
 <body>
+
+
     <main>
        <?php
         include_once("header.php");
+
          ?>
-         
+         <div class="errorWarning">Please Fill Password</div>
+         <div class="successWarning"></div>
         <section class="content-main mt-10 mb-10">
             <div class="card mx-auto card-login">
                 <div class="card-body">
                     <h3 class="card-title mb-4 text-center">Login</h3>
                     <form id="adminLogin" method ="POST" autocomplete="off">
                         <div class="mb-3">
-                            <input class="form-control" placeholder="Username or email" type="text">
+                            <input class="form-control" placeholder="Username or email" type="text" id="login_username">
                         </div> <!-- form-group// -->
                         <div class="mb-3">
-                            <input class="form-control" placeholder="Password" type="password">
+                            <input class="form-control" placeholder="Password" type="password" id="login_password">
                         </div> <!-- form-group// -->
                         <div class="mb-3">
                             <a href="#" class="float-end font-sm text-muted">Change password?</a>
