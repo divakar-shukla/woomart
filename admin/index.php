@@ -1,3 +1,9 @@
+<?php
+   session_start();
+    if(isset($_SESSION["admin_name"])){
+        header("location: http://localhost/woomart/admin/dashboard.php");
+    }
+ ?>
 <!DOCTYPE HTML>
 <html lang="en">
 
@@ -25,8 +31,7 @@
         include_once("header.php");
 
          ?>
-         <div class="errorWarning">Please Fill Password</div>
-         <div class="successWarning"></div>
+     
         <section class="content-main mt-10 mb-10">
             <div class="card mx-auto card-login">
                 <div class="card-body">
@@ -46,11 +51,12 @@
                             <button type="submit" class="btn btn-primary w-100 n" value="submit"> Login </button>
                         </div> <!-- form-group// -->
                     </form>
-                    
+                    <div class="success_warning"></div>
+                    <div class="error_warning"></div>
                 </div>
             </div>
         </section>
-         
+        
         
     </main>
     <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>

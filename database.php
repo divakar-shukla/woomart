@@ -232,11 +232,6 @@ public function __destruct(){
 }
 
 	
-$url = basename($_SERVER['PHP_SELF']);
 
-echo $url;
-echo "<br>";
-
-echo $_SERVER["PHP_SELF"];
 
 ?>

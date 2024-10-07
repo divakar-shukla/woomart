@@ -21,7 +21,7 @@ class database{
                     return false;
                 }
             }else{
-            //  echo "connected";
+         
              return true;  
             }
         } 
@@ -36,7 +36,7 @@ class database{
         if(count($result) > 0){
             return true;
         }else{
-           echo "Table not found";
+        array_push($this->error, $this->mysqli->error);
             return false;
         }
     }
@@ -54,7 +54,8 @@ public function insert($table, $param = array(), $type_code){
    $prepare = $this->mysqli->prepare($sqli);
    $prepare->bind_param($type_code, ...array_values($param));
    if($prepare->execute()){
-    echo $this->mysqli->insert_id;
+    array_push($this->result, $prepare->insert_id);
+
     return true; 
    }else{
     array_push($this->error, $this->mysqli->error);
@@ -75,26 +76,24 @@ array_push($placeholder_value, $where);
     $column_name = implode(", ", array_keys($param));
 
     foreach($param as $key=>$value){
-        // array_push($placeholder_arr, " ?");
+
         $set = "$key =  ? ";
         array_push($upadate_var, $set);
         
     }
     $upadate_vars = implode(", ", $upadate_var); 
-    // echo $upadate_var;
+
    $sqli = "UPDATE $table SET $upadate_vars WHERE $whereColumn = ?"; 
-//    echo $sqli;
+
    $prepare =  $this->mysqli->prepare($sqli);
 //    print_r($placeholder_value);
    $prepare->bind_param($type_code, ...$placeholder_value); 
 
    $f_result =  $prepare->execute();
    if($f_result){
-    echo  $prepare->affected_rows;
     array_push($this->result, $prepare->affected_rows);
     return true;
    }else{
-    echo $this->mysqli->error;
     array_push($this->error, $this->mysqli->error);
     return false;
    }
@@ -108,16 +107,13 @@ public function delete($table, $where, $whereColumn ){
 
 if($this->table_exist($table)){
     $sqli = "DELETE FROM $table WHERE $whereColumn = ?";
-   echo $sqli;
    $prepare = $this->mysqli->prepare($sqli);
    $prepare->bind_param("s", $where);
    $f_result = $prepare->execute();
    if($f_result){
-    echo $prepare->affected_rows;
     array_push($this->result, $prepare->affected_rows);
     return true;
    }else{
-    echo $this->mysqli->error;
     array_push($this->error, $this->mysqli->error);
     return false;
    }
@@ -154,12 +150,11 @@ public function select($table, $column = " *", $join = null, $where = null, $ord
 
        if($query){
         $this->result = $query->fetch_all(MYSQLI_ASSOC);
-        echo "<pre>";
-        print_r( $this->result);
-        echo "<pre>";
+        // echo "yes";
         return true;
        }else{
         array_push($this->error, $this->mysqli->error);
+        // echo "No"
         return false;
        }   
     }
@@ -168,11 +163,13 @@ public function select($table, $column = " *", $join = null, $where = null, $ord
 public function get_result(){
     $value = $this->result; 
     $this->result = array();
+    // print_r($value);
     return $value;
 }
 public function get_error(){
     $value = $this->error; 
     $this->error = array();
+    // print_r($value);
     return $value;
 }
 
@@ -238,11 +235,6 @@ public function __destruct(){
 }
 
 	
-$url = basename($_SERVER['PHP_SELF']);
 
-echo $url;
-echo "<br>";
-
-echo $_SERVER["PHP_SELF"];
 
 ?>

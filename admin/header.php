@@ -1,8 +1,14 @@
+
 <header class="main-header style-2 navbar">
             <div class="col-brand">
-                <a href="index.html" class="brand-wrap">
-                    <h2>Woomart</h2>
-                </a>
+                <?php 
+                if( !isset($_SESSION["admin_name"])){
+                    echo '<a href="index.php" class="brand-wrap">
+                    <h2>Woomart</h2> </a>';
+ 
+                }
+                ?>
+             
             </div>
             <div class="col-nav">
                 <ul class="nav">
@@ -15,8 +21,20 @@
                     </li>
                     
                     <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="assets/imgs/people/avatar2.jpg" alt="User"></a>
+                    <?php
+//    session_start();
+    if(isset($_SESSION["admin_name"])){
+
+        echo "<a class='dropdown-toggle' data-bs-toggle='dropdown' href='#' id='dropdownAccount' aria-expanded='false'>
+         <img class='img-xs rounded-circle' src='assets/imgs/people/avatar2.jpg' alt='User'>";
+
+    }else{
+
+    }
+ ?>                        
+                        <!-- <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="assets/imgs/people/avatar2.jpg" alt="User"></a> -->
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <div class='admin_name text-center bg-primary-light'><strong><?php echo $_SESSION['admin_name']; ?></strong></div>
                             <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
                             <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
                             <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>

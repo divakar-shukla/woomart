@@ -4600,10 +4600,36 @@ body.dark .dropdown-menu .dropdown-item.text-danger {
 }
 
 
-.errorWarning{
-  position: absolute;
-  top: 20px;
-  right:20px;
+.success_warning{
+  /* position: absolute; */
+  display: none;
+  /* top: 20px; */
+  padding: 10px 15px 10px 15px ;
+  font-size:18px ;
+  color:white;
+  /* right:20px; */
+  background: #5faca5;
+  box-shadow: 10px 10px 20px #0000006b;
+}
+.error_warning{
+  /* position: absolute; */
+  display: none;
+  /* top: 20px; */
+  padding: 10px 15px 10px 15px ;
+  font-size:18px ;
+  color:white;
+  /* right:20px; */
+  background: #5faca5;
+  box-shadow: 10px 10px 20px #0000006b;
+}
+.admin_name {
+  font-size:20px;
+  font-weight: 600px;
+  background-color: #eefffe;
+  text-transform: capitalize;
+}
+#add-admin input{
+background-color: #ededed;
 }
 /*# sourceMappingURL=main.css.map */
 
