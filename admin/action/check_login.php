@@ -11,7 +11,7 @@ if(isset($_POST["login"])){
 
    $password = md5($connection->escapeString($_POST["pass"]));
 
- $selection =  $connection->select("admin", " *", null, " password = '$password' AND EXISTS ( SELECT * FROM admin WHERE username = '$user' OR com_email = '$user')");
+ $selection =  $connection->select("admin", " *", null, " password = '$password' AND EXISTS ( SELECT * FROM admin WHERE username = '$user' OR email = '$user')");
  $result = $connection->get_result();
  $errors = $connection->get_error();
 if(empty($errors) && !empty($result)){

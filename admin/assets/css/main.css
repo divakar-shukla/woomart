@@ -4601,25 +4601,18 @@ body.dark .dropdown-menu .dropdown-item.text-danger {
 
 
 .success_warning{
-  /* position: absolute; */
   display: none;
-  /* top: 20px; */
   padding: 10px 15px 10px 15px ;
   font-size:18px ;
+  border-radius: 5px;
   color:white;
-  /* right:20px; */
   background: #5faca5;
   box-shadow: 10px 10px 20px #0000006b;
 }
 .error_warning{
-  /* position: absolute; */
   display: none;
-  /* top: 20px; */
   padding: 10px 15px 10px 15px ;
   font-size:18px ;
-  color:white;
-  /* right:20px; */
-  background: #5faca5;
   box-shadow: 10px 10px 20px #0000006b;
 }
 .admin_name {
@@ -4629,7 +4622,7 @@ body.dark .dropdown-menu .dropdown-item.text-danger {
   text-transform: capitalize;
 }
 #add-admin input{
-background-color: #ededed;
+background-color: #ccf0d1;
 }
 /*# sourceMappingURL=main.css.map */
 

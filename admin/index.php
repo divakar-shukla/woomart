@@ -52,7 +52,7 @@
                         </div> <!-- form-group// -->
                     </form>
                     <div class="success_warning"></div>
-                    <div class="error_warning"></div>
+                    <div class="error_warning alert-danger alert"></div>
                 </div>
             </div>
         </section>

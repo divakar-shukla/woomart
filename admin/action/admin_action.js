@@ -12,7 +12,11 @@ $(document).ready(function(){
         username = username.trim();
         password = password.trim();
         if(username == "" || password == ""){
-           $("#adminLogin").append('<div class="alert alert-danger">Please Fill All The Fields.</div>')
+           $(".error_warning").html("Please Fill All The Fields.").slideDown();
+           setTimeout(function(){
+            $(".error_warning").html("Please Fill All The Fields.").slideUp();
+           }, 2500)
+
         }else{
             $.ajax({
                 url: "action/check_login.php",
@@ -34,15 +38,14 @@ $(document).ready(function(){
                             // console.log(URL + "/dashboard.php")
                             $(".success_warning").html(res.success).slideUp()
 
-                        }, 1500)
-                      
+                        }, 1500) 
                     }
-                 
                 }
             })
         }
-
     })
+
+
 
 
     
