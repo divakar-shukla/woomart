@@ -4,6 +4,14 @@ $(document).ready(function(){
     var URL = origin+'/'+path[1]+'/'+path[2];
 
     // console.log(origin)
+
+    function insertMesssage(element, meassae){
+        // console.log("hii")
+        element.html(meassae).slideDown();
+            setTimeout(function(){
+                element.slideUp();
+            }, 2500)
+    }
     
     $("#adminLogin").submit(function(e){
         e.preventDefault();
@@ -14,7 +22,7 @@ $(document).ready(function(){
         if(username == "" || password == ""){
            $(".error_warning").html("Please Fill All The Fields.").slideDown();
            setTimeout(function(){
-            $(".error_warning").html("Please Fill All The Fields.").slideUp();
+            $(".error_warning").slideUp();
            }, 2500)
 
         }else{
@@ -46,7 +54,59 @@ $(document).ready(function(){
     })
 
 
+    $("#try_uplaod").submit(function(e){
+        e.preventDefault();
+        let sellerName = $("#seller_name").val().trim();
+        let sellerEmail = $("#seller_email").val().trim();
+        let sellerPhone = $("#seller_phone").val().trim();
+        let sellerAdress = $("#seller_address").val().trim();
+        let companyName = $("#company_name").val().trim();
+        let productNumber = $("#number_product").val().trim();
+        let productCategory = $("#product_category").val().trim();
+        let sellerUsername = $("#username").val().trim();
+        let sellerPassword = $("#password").val().trim();
+        let companyLogo = $('#imageUpload')[0].files[0];
+        // console.log(companyLogo)
+        let logoImageType = companyLogo.type
+        if(sellerName == ""){
+            insertMesssage($(".error_warning"), "Please! Enter  your name.")
+        }else if(sellerEmail == ""){
+            insertMesssage($(".error_warning"), "Please! Enter your the email.")
+        }else if(sellerPhone == ""){
+            insertMesssage($(".error_warning"), "Please! Enter your Phone number.")
+        }else if(companyName = ""){
+            insertMesssage($(".error_warning"), "Please! Enter your company name.")
 
+        }else if(productNumber == ""){
+            insertMesssage($(".error_warning"), "Please! Enter number of product.")
 
+        }else if(sellerUsername == ""){
+            insertMesssage($(".error_warning"), "Please! Enter your username.")
+
+        }else if(sellerPassword == ""){
+            insertMesssage($(".error_warning"), "Please! Enter your password.")
+   
+        }else if(companyLogo && !logoImageType.startsWith("image")){
+                insertMesssage($(".error_warning"), "Please! upload only image for company logo.")
+        }else{   
+        let formData = new FormData();
+        formData.append("seller_name", sellerName)
+        formData.append("seller_email", sellerEmail)
+        formData.append("seller_address", sellerAdress)
+        formData.append("company_name", companyName)
+        formData.append("product_number", productNumber)
+        formData.append("product_category", productCategory)
+        formData.append("seller_username", sellerUsername)
+        formData.append("seller_password", sellerPassword)
+        formData.append("seller_password", sellerPassword)
+
+            $.ajax({
+                url:"action/seller.php",
+                type:"POST",
+                data:""
+
+            })
+        }
+    })
     
 })
