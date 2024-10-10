@@ -15,7 +15,6 @@ if(isset($_POST["login"])){
  $result = $connection->get_result();
  $errors = $connection->get_error();
 if(empty($errors) && !empty($result)){
-    global  $result;
     session_start();
     $_SESSION["admin_name"] = $result[0]["admin_name"];
     $_SESSION["admin_role"] = $result[0]["admin_role"];

@@ -10,7 +10,8 @@ class database{
     private $result = array();
     private $error = array();
     private $mysqli = "";
-
+    private $final_sql = "";
+    
 
     public function __construct(){
         if(!$this->is_connect){
@@ -146,6 +147,8 @@ public function select($table, $column = " *", $join = null, $where = null, $ord
 
             $sql .= " LIMIT $start, $limit";
         }
+        $this->final_sql = $sql;
+       
        $query = $this->mysqli->query($sql);
 
        if($query){
@@ -173,6 +176,11 @@ public function get_error(){
     return $value;
 }
 
+public function get_sql(){
+    $value = $this->final_sql;
+    $sql = "";
+    return $value;
+}
 
 public function pagiantion($table, $where = null, $limit=null){
   

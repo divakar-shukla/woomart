@@ -66,15 +66,14 @@ $(document).ready(function(){
         let sellerUsername = $("#username").val().trim();
         let sellerPassword = $("#password").val().trim();
         let companyLogo = $('#imageUpload')[0].files[0];
-        // console.log(companyLogo)
-        let logoImageType = companyLogo.type
+        // console.log(companyName)
         if(sellerName == ""){
             insertMesssage($(".error_warning"), "Please! Enter  your name.")
         }else if(sellerEmail == ""){
             insertMesssage($(".error_warning"), "Please! Enter your the email.")
         }else if(sellerPhone == ""){
             insertMesssage($(".error_warning"), "Please! Enter your Phone number.")
-        }else if(companyName = ""){
+        }else if(companyName == ""){
             insertMesssage($(".error_warning"), "Please! Enter your company name.")
 
         }else if(productNumber == ""){
@@ -86,25 +85,34 @@ $(document).ready(function(){
         }else if(sellerPassword == ""){
             insertMesssage($(".error_warning"), "Please! Enter your password.")
    
-        }else if(companyLogo && !logoImageType.startsWith("image")){
+        }else if(companyLogo && !companyLogo.type.startsWith("image")){
                 insertMesssage($(".error_warning"), "Please! upload only image for company logo.")
         }else{   
         let formData = new FormData();
         formData.append("seller_name", sellerName)
         formData.append("seller_email", sellerEmail)
+        formData.append("seller_phone", sellerPhone)
         formData.append("seller_address", sellerAdress)
         formData.append("company_name", companyName)
         formData.append("product_number", productNumber)
         formData.append("product_category", productCategory)
         formData.append("seller_username", sellerUsername)
         formData.append("seller_password", sellerPassword)
-        formData.append("seller_password", sellerPassword)
+        formData.append("create", "yes")
+        if(companyLogo){
+        formData.append("company_logo", companyLogo)}
+
+        console.log(formData)
 
             $.ajax({
                 url:"action/seller.php",
                 type:"POST",
-                data:""
-
+                data:formData,
+                processData: false,   
+                contentType: false,
+                success:function(response){
+                    console.log(response)
+                }
             })
         }
     })
