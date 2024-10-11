@@ -2,21 +2,19 @@ $(document).ready(function(){
     var origin = window.location.origin;
     var path = window.location.pathname.split( '/' );
     var URL = origin+'/'+path[1]+'/'+path[2];
-
-    // console.log(origin)
-
+    
     function insertMesssage(element, meassae){
         // console.log("hii")
         element.html(meassae).slideDown();
             setTimeout(function(){
                 element.slideUp();
-            }, 2500)
-    }
-    
+            }, 2500)}
+
     $("#adminLogin").submit(function(e){
         e.preventDefault();
         var username = $("#login_username").val();
         var password = $("#login_password").val()
+        var user_type = $("#user_type").val()
         username = username.trim();
         password = password.trim();
         if(username == "" || password == ""){
@@ -25,11 +23,23 @@ $(document).ready(function(){
             $(".error_warning").slideUp();
            }, 2500)
 
+        }else if(user_type == ""){
+            insertMesssage($(".error_warning"), "Please! Select user type")
+
         }else{
+            let formData 
+            if(user_type == "admin"){
+                console.log(user_type)
+
+                formData = {login: 1, user:username, pass:password, userType:"admin"}
+            }else{
+                formData = {login: 1, user:username, pass:password, userType:"sellers"}
+            }
+            
             $.ajax({
                 url: "action/check_login.php",
                 type: "POST",
-                data: {login: 1, user:username, pass:password},
+                data: formData,
                 success: function(response){
                     console.log(response);
                     let res = JSON.parse(response);
@@ -66,7 +76,6 @@ $(document).ready(function(){
         let sellerUsername = $("#username").val().trim();
         let sellerPassword = $("#password").val().trim();
         let companyLogo = $('#imageUpload')[0].files[0];
-        // console.log(companyName)
         if(sellerName == ""){
             insertMesssage($(".error_warning"), "Please! Enter  your name.")
         }else if(sellerEmail == ""){
@@ -102,8 +111,6 @@ $(document).ready(function(){
         if(companyLogo){
         formData.append("company_logo", companyLogo)}
 
-        console.log(formData)
-
             $.ajax({
                 url:"action/seller.php",
                 type:"POST",
@@ -111,10 +118,40 @@ $(document).ready(function(){
                 processData: false,   
                 contentType: false,
                 success:function(response){
-                    console.log(response)
+                    let addResult = JSON.parse(response)
+                    if(addResult.status == "bothMatched"){
+                        insertMesssage($(".error_warning"), addResult.message)
+                    }else if(addResult.status == "username_matched"){
+                        insertMesssage($(".error_warning"), addResult.message)
+                    }else if(addResult.status == "emailMatch"){
+                        insertMesssage($(".error_warning"), addResult.message)
+                    }else if(addResult.status == "Not Image"){
+                        insertMesssage($(".error_warning"), addResult.message)
+                    }else{
+                        if(addResult.status == "adSeller"){
+                            insertMesssage($(".success_warning"), addResult.message)
+                            setTimeout(function(){
+                                window.location.href = URL + "/dashboard.php"    
+                            }, 1500) 
+                        }
+                    }
                 }
             })
         }
+    })
+
+    $("#logout").on("click", function(){
+        $.ajax({
+            url:"action/check_login.php",
+            type:"POST",
+            data:{logOut:"yes"},
+            success:function(response){
+                let log_out = JSON.parse(response)
+                if(log_out.status == "logout"){
+                    window.location.href = "http://localhost/woomart/admin";
+                }
+            }
+        })
     })
     
 })

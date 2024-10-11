@@ -12,14 +12,10 @@ if($_POST["create"]){
       $productNumber = $conection->escapeString( $_POST["product_number"]);
       $productCategory =  $conection->escapeString($_POST["product_category"]);
       $sellerUsername = $conection->escapeString($_POST["seller_username"]);
-      $sellerPassword = $conection->escapeString($_POST["seller_password"]);
+      $sellerPassword = md5($conection->escapeString($_POST["seller_password"]));
       $uniq_file_name = null;
    
-      
-
-
 $conection->select("sellers", "*", null, "email = '$sellerEmail' OR username = '$sellerUsername' ");
-
 $is_exists = $conection->get_result();
 $error = $conection->get_error();
 // print_r($is_exists);
@@ -52,7 +48,6 @@ if(!empty($is_exists) && empty($error)){
            
         }
     }
-     
     $params = [
         "name"=>$sellerName,
         "email"=>$sellerEmail,
@@ -63,16 +58,16 @@ if(!empty($is_exists) && empty($error)){
         "product_category"=>$productCategory,
         "username"=>$sellerUsername,
         "password"=>$sellerPassword,
-        "profile_image"=>$uniq_file_name
-    ];
+        "profile_image"=>$uniq_file_name];
     $conection->insert("sellers", $params, "sssssissss");
     $is_insert = $conection->get_result();
     $is_error = $conection->get_error();
     if(empty($is_error)){
-        echo json_encode(array("status"=>"adSeller", "message"=>"Id No . $is_insert[0] . Seller added "));
+        echo json_encode(array("status"=>"adSeller", "message"=>"Seller added successfuly"));
     }
 }
-// echo json_encode($is_exists);
 }
+
+
 
 ?>

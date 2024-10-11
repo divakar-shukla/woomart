@@ -43,11 +43,11 @@
             </a>
             <div class="submenu">
                 <a href="page-sellers-cards.html">Sellers cards</a>
-                <a href="page-sellers-list.html">Sellers list</a>
+                <a href="sellers-list.php">Sellers list</a>
                 <a href="page-seller-detail.html">Seller profile</a>
                 <?php 
                 if($_SESSION["admin_role"] == 1){
-                  echo ' <a href="add-seller.php">Add Seller</a>';
+                  echo '<a href="add-seller.php">Add Seller</a>';
  
                 }
                 ?>

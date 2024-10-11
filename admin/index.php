@@ -44,9 +44,16 @@
                             <input class="form-control" placeholder="Password" type="password" id="login_password">
                         </div> <!-- form-group// -->
                         <div class="mb-3">
-                            <a href="#" class="float-end font-sm text-muted">Change password?</a>
-                          
-                        </div> <!-- form-group form-check .// -->
+                            
+                            </div> <!-- form-group form-check .// -->
+                            <div class="mb-4">
+                                <select name="user_type" id="user_type" class="form-control" se>
+                                    <option value="">Select user type</option>
+                                    <option value="seller">Seller</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div> <!-- form-group// -->
+                            <a href="#" class="float-end font-sm text-muted mb-2">Change password?</a>
                         <div class="mb-4">
                             <button type="submit" class="btn btn-primary w-100 n" value="submit"> Login </button>
                         </div> <!-- form-group// -->
