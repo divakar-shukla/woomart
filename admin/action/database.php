@@ -56,7 +56,6 @@ public function insert($table, $param = array(), $type_code){
    $prepare->bind_param($type_code, ...array_values($param));
    if($prepare->execute()){
     array_push($this->result, $prepare->insert_id);
-
     return true; 
    }else{
     array_push($this->error, $this->mysqli->error);

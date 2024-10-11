@@ -64,7 +64,7 @@ if($_SESSION["admin_role"] != 1){
                                 </div>
                                 <div class="col-sm-6 pb-4 pb-sm-0"> 
                                     <label class="form-label ps-2">Company Name</label>
-                                    <input class="form-control"  type="text" placeholder="Compnay Name" id="company_name"        >
+                                    <input class="form-control"  type="text" placeholder="Compnay Name" id="company_name">
                                  </div>
                             </div>
                         </div> <!-- form-group// -->

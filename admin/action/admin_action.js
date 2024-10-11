@@ -20,8 +20,8 @@ $(document).ready(function(){
         username = username.trim();
         password = password.trim();
         if(username == "" || password == ""){
-           $(".error_warning").html("Please Fill All The Fields.").slideDown();
-           setTimeout(function(){
+           $(".error_warning").html("Please Fill All The Fields.").slideDown();   
+           setTimeout(function(){0
             $(".error_warning").slideUp();
            }, 2500)
 
