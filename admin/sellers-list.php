@@ -1,5 +1,9 @@
 <?php
    include "common.php";
+   if($_SESSION["admin_role"] != 1){
+    header("location: http://localhost/woomart/admin");
+    exit();
+   }
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -33,67 +37,63 @@
             <div class="content-header">
                 <h2 class="content-title">Sellers list</h2>
                 <div>
-                    <a href="#" class="btn btn-primary"><i class="material-icons md-plus"></i> Create new</a>
+                    <a href="add-seller.php" class="btn btn-primary"><i class="material-icons md-plus"></i> Create new</a>
                 </div>
             </div>
             <div class="card mb-4">
                 <header class="card-header">
+                    <form id="seller_search">
                     <div class="row gx-3">
                         <div class="col-lg-4 col-md-6 me-auto">
-                            <input type="text" placeholder="Search..." class="form-control">
+                            <input type="text" placeholder="Search..." class="form-control" id="seller_search_input">
                         </div>
                         <div class="col-lg-2 col-md-3 col-6">
-                            <select class="form-select">
-                                <option>Status</option>
+                            <select class="form-select" id="seller_search_filter">
+                                <option>Choose Filter</option>
                                 <option>Active</option>
                                 <option>Disabled</option>
-                                <option>Show all</option>
                             </select>
                         </div>
-                        <div class="col-lg-2 col-md-3 col-6">
-                            <select class="form-select">
-                                <option>Show 20</option>
-                                <option>Show 30</option>
-                                <option>Show 40</option>
-                            </select>
-                        </div>
+                       
                     </div>
+                    </form>
                 </header> <!-- card-header end// -->
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover" >
                             <thead>
                                 <tr>
-                                    <th>Seller</th>
-                                    <th>Phone No.</th>
-                                    <th>Email</th>
-                                    <th>Status</th>
-                                    <th>Registered</th>
-                                    <th class="text-end"> Action </th>
+                                    <th >Seller</th>
+                                    <th class="text-center">Phone No.</th>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Registered</th>
+                                    <th class="text-center"> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td width="30%">
-                                        <a href="#" class="itemside">
+                                    <td width="20%">
+                                        <a href="#" class="itemcenter">
                                             <div class="left">
                                                 <img src="assets/imgs/people/avatar1.jpg" class="img-sm img-avatar" alt="Userpic">
                                             </div>
                                             <div class="info pl-3">
-                                                <h6 class="mb-0 title">Eleanor Pena</h6>
+                                                <h6 class="mb-0 title ">Eleanor Pena</h6>
                                                 <small class="text-muted">Seller ID: #439</small>
                                             </div>
                                         </a>
                                     </td>                               </small>
-                                            </div>
+                                        </div>
                                         </a>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
+                                    +91-9628284576
                                     </td>
-                                    <td>eleanor2022@example.com</td>
-                                    <td><span class="badge rounded-pill alert-success">Active</span></td>
-                                    <td>08.07.2022</td>
-                                    <td class="text-end">
+                                    <td class="text-center">eleanor2022@example.com</td>
+                                    <td class="text-center"><span class="badge rounded-pill alert-success">Active</span></td>
+                                    <td class="text-center">08.07.2022</td>
+                                    <td class="text-center">
                                         <a href="#" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
                                     </td>
                                 </tr>

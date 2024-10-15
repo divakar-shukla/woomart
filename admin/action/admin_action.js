@@ -153,5 +153,10 @@ $(document).ready(function(){
             }
         })
     })
+
+    $("#seller_search").on("submit", function(){
+       let seller_search_input = $("#seller_search_input").val().trim();
+       let seller_search_filter = $("#seller_search_filter").val().trim();
+    })
     
 })

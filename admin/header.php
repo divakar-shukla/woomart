@@ -11,6 +11,7 @@
              
             </div>
             <div class="col-nav">
+            <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
                 <ul class="nav">
                  
                     <li class="nav-item">

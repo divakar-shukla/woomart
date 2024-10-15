@@ -4547,7 +4547,7 @@ body.dark .dropdown-menu .dropdown-item.text-danger {
         -ms-flex-pack: justify;
             justify-content: space-between;
   }
-  .main-header.style-2 .col-nav {
+  .main-header.style-2 {
     width: unset;
   }
   .main-wrap {
