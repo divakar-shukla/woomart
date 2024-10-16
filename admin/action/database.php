@@ -123,6 +123,7 @@ if($this->table_exist($table)){
 
 
 public function select($table, $column = " *", $join = null, $where = null, $order = null, $limit = null){
+    $page = "";
     if($this->table_exist($table)){
         $sql = "SELECT $column FROM $table";
 
@@ -136,7 +137,7 @@ public function select($table, $column = " *", $join = null, $where = null, $ord
             $sql .= " ORDER BY $order";
         }
         if($limit != null){
-            if(!$_GET["page"]){
+            if(!isset($_GET["page"])){
                 $page = 1;
             }else{
                 $page = $_GET["page"];
@@ -152,11 +153,9 @@ public function select($table, $column = " *", $join = null, $where = null, $ord
 
        if($query){
         $this->result = $query->fetch_all(MYSQLI_ASSOC);
-        // echo "yes";
         return true;
        }else{
         array_push($this->error, $this->mysqli->error);
-        // echo "No"
         return false;
        }   
     }
@@ -165,13 +164,11 @@ public function select($table, $column = " *", $join = null, $where = null, $ord
 public function get_result(){
     $value = $this->result; 
     $this->result = array();
-    // print_r($value);
     return $value;
 }
 public function get_error(){
     $value = $this->error; 
     $this->error = array();
-    // print_r($value);
     return $value;
 }
 
@@ -181,7 +178,7 @@ public function get_sql(){
     return $value;
 }
 
-public function pagiantion($table, $where = null, $limit=null){
+public function pagination($table, $where = null, $limit=15){
   
     if($this->table_exist($table)){
         $sql = "SELECT COUNT(*) AS numb FROM $table";
@@ -193,8 +190,8 @@ public function pagiantion($table, $where = null, $limit=null){
         
         $total_row = $query->fetch_array()["numb"];
 
-        $number_ofpage = ceil($total_row / $limit);
-        $output = "<ul class='pagiantion'> ";
+        $number_ofpage = ceil($total_row/$limit);
+        $output = "<ul class='pagination justify-content-start'> ";
        
         // $page_number = $_GET["page"];
         if(isset($_GET["page"])){
@@ -202,18 +199,19 @@ public function pagiantion($table, $where = null, $limit=null){
         }else{
             $page_number = 1;
         }
+        // <li class='page-item' data-page='{$i}'><a class='page-link' href='#'><i class='material-icons md-chevron_left'></i></a></li>
         for($i= 1; $i <= $number_ofpage; $i++){
          if($i == $page_number){
-            $output .= "<li class='active_page'>$i</li>";
+            $output .= '<li class="page-item active" data-pagenumber=' . "$i" . '><a class="page-link" >' . $i . '</a></li>';
          }else{
-            $output .= "<li>$i</li>";
+            $output .= '<li class="page-item " data-pagenumber=' . "$i" . '><a class="page-link" >' . $i . '</a></li>';
 
          }
 
 
         }
 
-        $output .= "</ul>";
+        $output .= '<li class="page-item" id="nextpage"><a class="page-link" ><i class="material-icons md-chevron_right"></i></a></li></ul>';
 
         return $output;
     }

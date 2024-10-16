@@ -4626,3 +4626,21 @@ background-color: #ccf0d1;
 }
 /*# sourceMappingURL=main.css.map */
 
+.full_page_error{
+  position: absolute;
+
+}
+.full_page_success{
+  position: absolute;
+}
+.page-link{
+  display: flex !important;
+   align-items: center !important;
+    justify-content: center !important;
+}
+.w-30{
+  width:30%;
+}
+.w-40{
+  width:40%;
+}

@@ -4,6 +4,19 @@
     header("location: http://localhost/woomart/admin");
     exit();
    }
+
+   include("action/database.php");
+
+   $conection = new database();
+
+   $conection->select("sellers", "*", null, null, null, 15);
+
+   $seller_search_result = $conection->get_result();
+
+  $pagination_result = $conection->pagination("sellers");
+   
+
+
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -34,6 +47,8 @@
       include "header.php"
       ?>
         <section class="content-main">
+            <div class="full_page_error"></div>
+            <div class="full_page_success"></div>
             <div class="content-header">
                 <h2 class="content-title">Sellers list</h2>
                 <div>
@@ -49,9 +64,9 @@
                         </div>
                         <div class="col-lg-2 col-md-3 col-6">
                             <select class="form-select" id="seller_search_filter">
-                                <option>Choose Filter</option>
-                                <option>Active</option>
-                                <option>Disabled</option>
+                                <option value="" selected>Choose Filter</option>
+                                <option value="">Active</option>
+                                <option value="">Disabled</option>
                             </select>
                         </div>
                        
@@ -72,31 +87,39 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td width="20%">
-                                        <a href="#" class="itemcenter">
-                                            <div class="left">
-                                                <img src="assets/imgs/people/avatar1.jpg" class="img-sm img-avatar" alt="Userpic">
+                               
+                                <?php
+                                foreach($seller_search_result as $value){
+                              
+                                    echo " <tr>
+                                    <td width='20%'>
+                                        <a href='#' class='itemcenter'>
+                                            <div class='left'>
+                                                <img src='action/upload/{$value["profile_image"]}'  class='w-30 img-avatar' alt='Userpic' style='aspect-ratio: 1 / 1; min-width:60px;'>
                                             </div>
-                                            <div class="info pl-3">
-                                                <h6 class="mb-0 title ">Eleanor Pena</h6>
-                                                <small class="text-muted">Seller ID: #439</small>
+                                            <div class='info pl-3 ps-sm-2 ps-0'>
+                                                <h6 class='mb-0 title '>{$value['name']}</h6>
+                                                <small class='text-muted'>{$value['id']}</small>
                                             </div>
                                         </a>
-                                    </td>                               </small>
+                                    </td> </small>
                                         </div>
                                         </a>
                                     </td>
-                                    <td class="text-center">
-                                    +91-9628284576
+                                    <td class='text-center'>
+                                    {$value["phone"]}
                                     </td>
-                                    <td class="text-center">eleanor2022@example.com</td>
-                                    <td class="text-center"><span class="badge rounded-pill alert-success">Active</span></td>
-                                    <td class="text-center">08.07.2022</td>
-                                    <td class="text-center">
-                                        <a href="#" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
+                                    <td class='text-center'>{$value['email']}</td>
+                                    <td class='text-center'><span class='badge rounded-pill alert-success'>{$value['status']}</span></td>
+                                    <td class='text-center'>{$value['created_at']}</td>
+                                    <td class='text-center'>
+                                        <a href='seller_details.php?id={$value["id"]}' class='btn btn-sm btn-brand rounded font-sm mt-15' >View details</a>
                                     </td>
-                                </tr>
+                                </tr>";
+                            
+                                }
+
+                                ?>
                             </tbody>
                         </table> <!-- table-responsive.// -->
                     </div>
@@ -104,14 +127,19 @@
             </div> <!-- card end// -->
             <div class="pagination-area mt-15 mb-50">
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-start">
+                    <?php
+                     echo $pagination_result;
+
+                    ?>
+                    <!-- <ul class="pagination justify-content-start">
+                        <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_left"></i></a></li>
                         <li class="page-item active"><a class="page-link" href="#">01</a></li>
                         <li class="page-item"><a class="page-link" href="#">02</a></li>
                         <li class="page-item"><a class="page-link" href="#">03</a></li>
                         <li class="page-item"><a class="page-link dot" href="#">...</a></li>
                         <li class="page-item"><a class="page-link" href="#">16</a></li>
                         <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
-                    </ul>
+                    </ul> -->
                 </nav>
             </div>
         </section> <!-- content-main end// -->

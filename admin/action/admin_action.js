@@ -154,9 +154,36 @@ $(document).ready(function(){
         })
     })
 
-    $("#seller_search").on("submit", function(){
+    $("#seller_search").on("change keyup", function(){
+        console.log("Ram")
        let seller_search_input = $("#seller_search_input").val().trim();
        let seller_search_filter = $("#seller_search_filter").val().trim();
+       let searchData
+       if(seller_search_input != ""){
+        if(seller_search_filter != ""){
+            searchData = {
+                searchInput : seller_search_input,
+                selllerFilter: seller_search_filter,
+                isSellerSearch:"yes"}
+        }else{
+        searchData = {
+            searchInput : seller_search_input,
+            isSellerSearch:"yes"
+        }
+        }
+        $.ajax({
+            url:"action/seller.php",
+            type:"POST",
+            data:searchData,
+            success:function(response){
+                let sellerSearchResult = JSON.parse(response)
+                if(sellerSearchResult.length = 0){
+                    
+                }
+            }
+        })
+        
+    }
     })
     
 })

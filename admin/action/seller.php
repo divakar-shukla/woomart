@@ -2,7 +2,7 @@
 include("database.php");
 
 $conection = new database();
-if($_POST["create"]){
+if(isset($_POST["create"])){
     // print_r($_POST);
       $sellerName =  $conection->escapeString($_POST["seller_name"]);
       $sellerEmail = $conection->escapeString($_POST["seller_email"]);
@@ -68,6 +68,35 @@ if(!empty($is_exists) && empty($error)){
 }
 }
 
+if(isset($_POST["isSellerSearch"])){
+    $seller_search_input = $conection->escapeString($_POST["searchInput"]);
 
+    isset($_POST["selllerFilter"])? $seller_search_filter = $conection->escapeString($_POST["selllerFilter"]): $seller_search_filter = null;
+
+    if($seller_search_filter != null){
+    $search_where = "status = $seller_search_filter EXISTS(SELECT * FROM sellers WHERE name LIKE '$seller_search_input%' OR phone LIKE '$seller_search_input%' OR email LIKE '$seller_search_input%')";
+    $conection->select("sellers", "*", null, $search_where, null, 20);
+}else{
+    $search_where = " name LIKE '$seller_search_input%' OR phone LIKE '$seller_search_input%' OR email LIKE '$seller_search_input%'";
+
+    $conection->select("sellers", "*", null,  $search_where, null, 20);
+  
+}
+$seller_search_result = $conection->get_result();
+$is_search_error = $conection->get_error();
+// $seller_search_sql = $conection->get_sql();
+// array_push($seller_search_result, $seller_search_sql);
+if(empty($seller_search_result)){
+    echo json_encode([
+        "status"=> "No record",
+        "message"=> " No record found!"
+    ]);
+}elseif(empty($is_search_error) && !empty($seller_search_result)){
+    echo json_encode([
+        "status"=> "success",
+        "message"=> $seller_search_result
+    ]);
+}
+}
 
 ?>

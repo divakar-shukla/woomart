@@ -1,7 +1,7 @@
 <aside class="navbar-aside" id="offcanvas_aside">
 <div class="aside-top">
     <a href="http://localhost/woomart/admin/dashboard.php" class="brand-wrap">
-    <h3>Woomart</h3> 
+    <h3>Woomart</h3>
     </a>
     <div>
         <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i> </button>
@@ -40,8 +40,7 @@
         <?php 
 
         if($_SESSION["admin_role"] == 1){
-            // echo "<h1>Hii</h1>";
-                       echo '<li class="menu-item has-submenu">
+      echo '<li class="menu-item has-submenu">
                 <a class="menu-link" href="page-sellers-cards.html"> <i class="icon material-icons md-store"></i>
                     <span class="text">Sellers</span>
                 </a>
